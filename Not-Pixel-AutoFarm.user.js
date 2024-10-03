@@ -156,6 +156,9 @@ function randomClick() {
         const y = Math.floor(Math.random() * canvas.height);
         simulatePointerEvents(canvas, x, y, x, y);
 
+        // Задержка между выбором пикселя и кликом
+        const clickDelay = Math.floor(Math.random() * 500) + 500;
+
         simulatePointerEvents(paintButton, 0, 0, 0, 0);
         const nextClickDelay = getRandomDelay(GAME_SETTINGS.minDelay, GAME_SETTINGS.maxDelay);
         GAME_SETTINGS.isClickInProgress = false;
