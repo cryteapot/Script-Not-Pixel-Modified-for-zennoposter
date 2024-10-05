@@ -165,29 +165,17 @@ function randomClick() {
 
     if (buttonText === 'Paint') {
       waitForElement('#canvasHolder', (canvas) => {
-        // Calculate initial position near the center
-        const initialX = canvas.width / 2;
-        const initialY = canvas.height / 2;
-
-        // Generate random movement offsets, ensuring they keep the cursor on screen
-        const moveX = Math.floor(Math.random() * (200)) - 100; // Random movement from -100 to +100
-        const moveY = Math.floor(Math.random() * (200)) - 100; // Random movement from -100 to +100
-
-        // Calculate target position for the cursor after movement
-        const targetX = Math.min(Math.max(initialX + moveX, 50), 950);
-        const targetY = Math.min(Math.max(initialY + moveY, 50), 950);
-
-        // Simulate movement to target position
-        simulatePointerEvents(canvas, initialX, initialY, targetX, targetY);
+        // Random movement for initial click
+        const moveX = Math.floor(Math.random() * 200) - 100;
+        const moveY = Math.floor(Math.random() * 200) - 100;
+        simulatePointerEvents(canvas, canvas.width / 2, canvas.height / 2, canvas.width / 2 + moveX, canvas.height / 2 + moveY);
 
         // Generate random pixel coordinates within (50, 50) and (950, 950)
-        const randomPixelX = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
-        const randomPixelY = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
+        const x = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
+        const y = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
 
-        // Ensure the random pixel is on the screen after movement
-        const adjustedPixelX = Math.min(Math.max(randomPixelX, 50), 950);
-        const adjustedPixelY = Math.min(Math.max(randomPixelY, 50), 950);
-        simulatePointerEvents(canvas, adjustedPixelX, adjustedPixelY, adjustedPixelX, adjustedPixelY);
+        // Simulate clicking the selected pixel
+        simulatePointerEvents(canvas, x, y, x, y); // This simulates moving to and clicking on the pixel
 
         // Simulate clicking the paint button
         simulatePointerEvents(paintButton, 0, 0, 0, 0);
