@@ -30,7 +30,24 @@ const GAME_SETTINGS = {
 };
 
 
+function clickOkayPromiseButton() {
+  function tryClickOkayPromiseButton() {
+      const okayPromiseButton = document.querySelector('button._button_1boq4_54');
+      const letsGoButton = document.querySelector('button._button_1drph_81');
+      
+      if (okayPromiseButton && okayPromiseButton.textContent.includes('Okay, promise')) {
+          triggerEvents(okayPromiseButton);
+      }
+      
+      if (letsGoButton && letsGoButton.textContent.includes('Let’s Gooooooo!')) {
+          triggerEvents(letsGoButton);
+      }
+      
+      setTimeout(tryClickOkayPromiseButton, 3000);
+  }
 
+  tryClickOkayPromiseButton();
+}
 
 function createMenu() {
   const controlsContainer = document.createElement('div');
@@ -304,6 +321,7 @@ function startScript() {
 function initializeScript() {
   createMenu();
   startScript();
+  clickOkayPromiseButton();
 }
 
 if (document.readyState === 'loading') {
