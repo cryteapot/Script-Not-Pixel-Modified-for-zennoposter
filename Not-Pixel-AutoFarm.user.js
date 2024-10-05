@@ -148,18 +148,33 @@ function randomClick() {
 
     if (buttonText === 'Paint') {
       waitForElement('#canvasHolder', (canvas) => {
-        const moveX = Math.floor(Math.random() * 200) - 100;
-        const moveY = Math.floor(Math.random() * 200) - 100;
-        simulatePointerEvents(canvas, canvas.width / 2, canvas.height / 2, canvas.width / 2 + moveX, canvas.height / 2 + moveY);
+        // Calculate initial position near the center
+        const initialX = canvas.width / 2;
+        const initialY = canvas.height / 2;
 
-        const x = Math.floor(Math.random() * canvas.width);
-        const y = Math.floor(Math.random() * canvas.height);
-        simulatePointerEvents(canvas, x, y, x, y);
+        // Generate random movement offsets, ensuring they keep the cursor on screen
+        const moveX = Math.floor(Math.random() * (200)) - 100; // Random movement from -100 to +100
+        const moveY = Math.floor(Math.random() * (200)) - 100; // Random movement from -100 to +100
 
-        // Задержка между выбором пикселя и кликом
-        const clickDelay = Math.floor(Math.random() * 500) + 500;
+        // Calculate target position for the cursor after movement
+        const targetX = Math.min(Math.max(initialX + moveX, 50), 950);
+        const targetY = Math.min(Math.max(initialY + moveY, 50), 950);
 
+        // Simulate movement to target position
+        simulatePointerEvents(canvas, initialX, initialY, targetX, targetY);
+
+        // Generate random pixel coordinates within (50, 50) and (950, 950)
+        const randomPixelX = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
+        const randomPixelY = Math.floor(Math.random() * (950 - 50 + 1)) + 50;
+
+        // Ensure the random pixel is on the screen after movement
+        const adjustedPixelX = Math.min(Math.max(randomPixelX, 50), 950);
+        const adjustedPixelY = Math.min(Math.max(randomPixelY, 50), 950);
+        simulatePointerEvents(canvas, adjustedPixelX, adjustedPixelY, adjustedPixelX, adjustedPixelY);
+
+        // Simulate clicking the paint button
         simulatePointerEvents(paintButton, 0, 0, 0, 0);
+
         const nextClickDelay = getRandomDelay(GAME_SETTINGS.minDelay, GAME_SETTINGS.maxDelay);
         GAME_SETTINGS.isClickInProgress = false;
         setTimeout(randomClick, nextClickDelay);
